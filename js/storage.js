@@ -1,6 +1,8 @@
 
+const STORAGE_KEY = "produtos_estoque";
 
-const produtos = [];
+const produtos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
 
 function criarProduto(nome, quantidade, categoria) {
   return {
@@ -22,6 +24,8 @@ function adicionarProduto(produto) {
   } else {
     produtos.push(produto);
   }
+
+  salvarProdutos()
 }
 
 
@@ -34,3 +38,10 @@ export {
   adicionarProduto,
   obterProdutos
 };
+
+
+function salvarProdutos() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(produtos));
+}
+
+console.log("storage carregado")

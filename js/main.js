@@ -29,3 +29,6 @@ onSubmit(function (event) {
   renderizarProdutos(obterProdutos());
   limparFormulario();
 });
+
+
+renderizarProdutos(obterProdutos())
