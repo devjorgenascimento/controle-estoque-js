@@ -1,9 +1,9 @@
-
-
 import {
   criarProduto,
   adicionarProduto,
-  obterProdutos
+  obterProdutos,
+  removerProduto,
+  saidaProduto
 } from "./storage.js";
 
 import {
@@ -12,6 +12,30 @@ import {
   renderizarProdutos,
   onSubmit
 } from "./ui.js";
+
+function atualizarUI() {
+  renderizarProdutos(
+    obterProdutos(),
+    handleRemoverProduto,
+    handleSaidaProduto
+  );
+}
+
+function handleRemoverProduto(id) {
+  removerProduto(id);
+  atualizarUI();
+}
+
+function handleSaidaProduto(id, quantidade) {
+  const sucesso = saidaProduto(id, quantidade);
+
+  if (!sucesso) {
+    alert("Quantidade inválida para saída.");
+    return;
+  }
+
+  atualizarUI();
+}
 
 onSubmit(function (event) {
   event.preventDefault();
@@ -24,11 +48,10 @@ onSubmit(function (event) {
   }
 
   const novoProduto = criarProduto(nome, quantidade, categoria);
-
   adicionarProduto(novoProduto);
-  renderizarProdutos(obterProdutos());
+
+  atualizarUI();
   limparFormulario();
 });
 
-
-renderizarProdutos(obterProdutos())
+atualizarUI();

@@ -33,15 +33,49 @@ function obterProdutos() {
   return produtos;
 }
 
-export {
-  criarProduto,
-  adicionarProduto,
-  obterProdutos
-};
+function removerProduto(id) {
+  const index = produtos.findIndex(produto => produto.id === id);
 
+  if (index !== -1) {
+    produtos.splice(index, 1);
+    salvarProdutos();
+  }
+}
 
 function salvarProdutos() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(produtos));
 }
 
-console.log("storage carregado")
+function saidaProduto(id, quantidadeSaida) {
+  const produto = produtos.find(p => p.id === id);
+
+  if (!produto) return false;
+
+  if (quantidadeSaida > produto.quantidade) {
+    return false;
+  }
+
+  produto.quantidade -= quantidadeSaida;
+
+  if (produto.quantidade === 0) {
+    removerProduto(id);
+  } else {
+    salvarProdutos();
+  }
+
+  return true;
+}
+
+
+export {
+  criarProduto,
+  adicionarProduto,
+  obterProdutos,
+  removerProduto,
+  saidaProduto
+};
+
+
+
+
+
