@@ -144,3 +144,24 @@ margin-bottom: 10px;
 
 border-radius: 4px;
 }
+
+.produto {
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.estoque-alto {
+  background-color: #2ecc71;
+}
+
+.estoque-medio {
+  background-color: #f1c40f;
+  color: #000;
+}
+
+.estoque-baixo {
+  background-color: #e74c3c;
+}
