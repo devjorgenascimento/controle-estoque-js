@@ -145,3 +145,21 @@ ul {
 .btn-remover:hover {
   background-color: #c0392b;
 }
+
+#mensagem {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  display: none;
+  font-weight: bold;
+}
+
+.mensagem-sucesso {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.mensagem-erro {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+}

@@ -74,10 +74,40 @@ function renderizarProdutos(produtos, onRemover, onSaida) {
   });
 }
 
+const mensagemEl = document.getElementById("mensagem");
+
+function mostrarMensagem(texto, tipo = "sucesso") {
+  mensagemEl.textContent = texto;
+  mensagemEl.className = "";
+  mensagemEl.classList.add(`mensagem-${tipo}`);
+  mensagemEl.style.display = "block";
+
+  setTimeout(() => {
+    mensagemEl.style.display = "none";
+  }, 3000);
+}
+
+function renderizarHistorico(historico) {
+  const lista = document.getElementById("historico");
+  lista.innerHTML = "";
+
+  historico.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent =
+      `[${item.data}] ${item.tipo.toUpperCase()} - ${item.produto} (${item.quantidade})`;
+    lista.appendChild(li);
+  });
+}
+
+
+
+
 
 export {
   obterDadosFormulario,
   limparFormulario,
   renderizarProdutos,
-  onSubmit
+  onSubmit,
+  mostrarMensagem,
+  renderizarHistorico
 };

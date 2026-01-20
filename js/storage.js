@@ -1,8 +1,9 @@
 
 const STORAGE_KEY = "produtos_estoque";
+const HISTORY_KEY = "historico_estoque";
 
 const produtos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-
+const historico = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
 
 function criarProduto(nome, quantidade, categoria) {
   return {
@@ -15,17 +16,19 @@ function criarProduto(nome, quantidade, categoria) {
 
 function adicionarProduto(produto) {
   const produtoExistente = produtos.find(p =>
-    p.nome === produto.nome &&
+    p.nome.toLowerCase() === produto.nome.toLowerCase() &&
     p.categoria === produto.categoria
   );
 
   if (produtoExistente) {
     produtoExistente.quantidade += produto.quantidade;
+    registrarHistorico("entrada", produtoExistente, produto.quantidade);
   } else {
     produtos.push(produto);
+    registrarHistorico("entrada", produto, produto.quantidade);
   }
 
-  salvarProdutos()
+  salvarProdutos();
 }
 
 
@@ -34,12 +37,18 @@ function obterProdutos() {
 }
 
 function removerProduto(id) {
-  const index = produtos.findIndex(produto => produto.id === id);
+  const index = produtos.findIndex(p => p.id === id);
 
   if (index !== -1) {
+    const produto = produtos[index];
+    registrarHistorico("remocao", produto, produto.quantidade);
     produtos.splice(index, 1);
     salvarProdutos();
   }
+}
+
+function salvarHistorico() {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(historico));
 }
 
 function salvarProdutos() {
@@ -48,14 +57,10 @@ function salvarProdutos() {
 
 function saidaProduto(id, quantidadeSaida) {
   const produto = produtos.find(p => p.id === id);
-
-  if (!produto) return false;
-
-  if (quantidadeSaida > produto.quantidade) {
-    return false;
-  }
+  if (!produto || quantidadeSaida > produto.quantidade) return false;
 
   produto.quantidade -= quantidadeSaida;
+  registrarHistorico("saida", produto, quantidadeSaida);
 
   if (produto.quantidade === 0) {
     removerProduto(id);
@@ -67,12 +72,30 @@ function saidaProduto(id, quantidadeSaida) {
 }
 
 
+function registrarHistorico(tipo, produto, quantidade) {
+  historico.unshit({
+    id: crypto.randomUUID(),
+    tipo,
+    produto: produto.nome,
+    categoria: produto.categoria,
+    quantidade,
+    data: new Date().toLocaleString("pt-BR")
+  });
+
+  salvarHistorico();
+}
+
+function obterHistorico() {
+  return historico;
+}
+
 export {
   criarProduto,
   adicionarProduto,
+  saidaProduto,
   obterProdutos,
   removerProduto,
-  saidaProduto
+  obterHistorico
 };
 
 

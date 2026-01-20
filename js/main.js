@@ -3,14 +3,17 @@ import {
   adicionarProduto,
   obterProdutos,
   removerProduto,
-  saidaProduto
+  obterHistorico,
+  
 } from "./storage.js";
 
 import {
   obterDadosFormulario,
   limparFormulario,
   renderizarProdutos,
-  onSubmit
+  onSubmit,
+  mostrarMensagem,
+  renderizarHistorico
 } from "./ui.js";
 
 function atualizarUI() {
@@ -19,6 +22,7 @@ function atualizarUI() {
     handleRemoverProduto,
     handleSaidaProduto
   );
+  renderizarHistorico(obterHistorico());
 }
 
 function handleRemoverProduto(id) {
@@ -30,7 +34,7 @@ function handleSaidaProduto(id, quantidade) {
   const sucesso = saidaProduto(id, quantidade);
 
   if (!sucesso) {
-    alert("Quantidade inválida para saída.");
+    mostrarMensagem("Quantidade inválida para saída.", "erro");
     return;
   }
 
