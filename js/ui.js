@@ -24,13 +24,11 @@ function onSubmit(callback) {
   formProduto.addEventListener("submit", callback);
 }
 
-
 function obterClasseEstoque(quantidade) {
   if (quantidade >= 100) return "estoque-alto";
   if (quantidade >= 50) return "estoque-medio";
   return "estoque-baixo";
 }
-
 
 function renderizarProdutos(produtos, onRemover, onSaida) {
   listaProdutos.innerHTML = "";
@@ -99,8 +97,12 @@ function renderizarHistorico(historico) {
   });
 }
 
+const adminIcon = document.getElementById("admin-icon");
+const adminPanel = document.getElementById("admin-panel");
 
-
+adminIcon.addEventListener("click", () => {
+  adminPanel.classList.toggle("hidden");
+});
 
 
 export {

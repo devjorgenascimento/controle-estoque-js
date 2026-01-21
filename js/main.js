@@ -1,6 +1,7 @@
 import {
   criarProduto,
   adicionarProduto,
+  saidaProduto,
   obterProdutos,
   removerProduto,
   obterHistorico,
@@ -57,5 +58,21 @@ onSubmit(function (event) {
   atualizarUI();
   limparFormulario();
 });
+
+  function limparHistoricoAdmin() {
+  localStorage.removeItem("historico_estoque");
+  alert("Histórico apagado com sucesso.");
+}
+
+function resetarEstoqueAdmin() {
+  localStorage.removeItem("produtos_estoque");
+  localStorage.removeItem("historico_estoque");
+  alert("Estoque resetado.");
+  location.reload();
+}
+
+document.getElementById("btn-resetar-estoque")
+  .addEventListener("click", resetarEstoqueAdmin);
+
 
 atualizarUI();

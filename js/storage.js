@@ -73,7 +73,7 @@ function saidaProduto(id, quantidadeSaida) {
 
 
 function registrarHistorico(tipo, produto, quantidade) {
-  historico.unshit({
+  historico.unshift({
     id: crypto.randomUUID(),
     tipo,
     produto: produto.nome,
@@ -84,6 +84,7 @@ function registrarHistorico(tipo, produto, quantidade) {
 
   salvarHistorico();
 }
+
 
 function obterHistorico() {
   return historico;
